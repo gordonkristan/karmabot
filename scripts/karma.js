@@ -26,30 +26,43 @@ var insertKarma = function(subject, amount, callback) {
 	});
 };
 
-module.exports = function(robot) {
+var handleKarmaRequest = function(subject, operation, response) {
+	if (operation !== '++' && operation !== '--' && operation !== '—') {
+		return;
+	}
 
-	robot.hear(/(\S+?):?\s?(\+\+|\-\-|—)/i, function(response) {
-		var operation = response.match[2];
-		if (operation !== '++' && operation !== '--' && operation !== '—') {
+	subject = (subject || '').trim();
+	var isUsername = false;
+	if (subject[0] === '@') {
+		subject = subject.slice(1);
+		isUsername = true;
+	}
+
+	insertKarma(subject.toLowerCase(), (operation === '++' ? 1 : -1), function(error, newValue) {
+		if (error) {
 			return;
 		}
 
-		var subject = (response.match[1] || '').trim();
-		var isUsername = false;
-		if (subject[0] === '@') {
-			subject = subject.slice(1);
-			isUsername = true;
+		var verb = (operation === '++' ? 'risen' : 'fallen');
+		var replySubject = (isUsername ? '@' + subject : subject);
+		response.send(replySubject +'\'s karma has ' + verb + ' to ' + (newValue || 0));
+	});
+};
+
+module.exports = function(robot) {
+
+	robot.hear(/(\+\+|\-\-|—)/i, function(response) {
+		var message = response.message.text || '';
+
+		var match;
+
+		if (match = message.match(/(:\S+?:)\x20*(\+\+|\-\-|—)/i)) { // Emoji
+			handleKarmaRequest(match[1], match[2], response);
+		} else if (match = message.match(/(@\S+?):?\x20*(\+\+|\-\-|—)/i)) { // @Mentions
+			handleKarmaRequest(match[1], match[2], response);
+		} else if (match = message.match(/(\S+)\x20*(\+\+|\-\-|—)/i)) { // Everything else
+			handleKarmaRequest(match[1], match[2], response);
 		}
-
-		insertKarma(subject.toLowerCase(), (operation === '++' ? 1 : -1), function(error, newValue) {
-			if (error) {
-				return;
-			}
-
-			var verb = (operation === '++' ? 'risen' : 'fallen');
-			var replySubject = (isUsername ? '@' + subject : subject);
-			response.send(replySubject +'\'s karma has ' + verb + ' to ' + (newValue || 0));
-		});
 	});
 
 };
