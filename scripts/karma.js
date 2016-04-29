@@ -28,7 +28,7 @@ var insertKarma = function(subject, amount, callback) {
 
 module.exports = function(robot) {
 
-	robot.hear(/(\S+)(:?\s?)?(\+\+|\-\-|—)/i, function(response) {
+	robot.hear(/(\S+)(?:\:|(?:\s)|(?:\:\s))(\+\+|\-\-|—)/i, function(response) {
 		var operation = response.match[3];
 		if (operation !== '++' && operation !== '--' && operation !== '—') {
 			return;
