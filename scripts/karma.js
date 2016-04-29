@@ -30,7 +30,7 @@ module.exports = function(robot) {
 
 	robot.hear(/(\S+)(:?\s?)?(\+\+|\-\-)/i, function(response) {
 		var operation = response.match[3];
-		if (operation !== '++' && operation !== '--') {
+		if (operation !== '++' && operation !== '--' && operation !== '—') {
 			return;
 		}
 
