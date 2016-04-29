@@ -38,7 +38,7 @@ var handleKarmaRequest = function(subject, operation, response) {
 		isUsername = true;
 	}
 
-	if (subject.toLowerCase() === 'gordo') {
+	if (subject.toLowerCase() === 'gordo' && operation !== '++') {
 		response.reply('How dare you?!');
 		return;
 	}
