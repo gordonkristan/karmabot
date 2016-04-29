@@ -38,6 +38,11 @@ var handleKarmaRequest = function(subject, operation, response) {
 		isUsername = true;
 	}
 
+	if (subject.toLowerCase() === 'gordo') {
+		response.reply('How dare you?!');
+		return;
+	}
+
 	insertKarma(subject.toLowerCase(), (operation === '++' ? 1 : -1), function(error, newValue) {
 		if (error) {
 			return;
