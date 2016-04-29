@@ -34,14 +34,14 @@ module.exports = function(robot) {
 			return;
 		}
 
-		var subject = (response.match[1] || '').trim().toLowerCase();
+		var subject = (response.match[1] || '').trim();
 		var isUsername = false;
 		if (subject[0] === '@') {
 			subject = subject.slice(1);
 			isUsername = true;
 		}
 
-		insertKarma(subject, (operation === '++' ? 1 : -1), function(error, newValue) {
+		insertKarma(subject.toLowerCase(), (operation === '++' ? 1 : -1), function(error, newValue) {
 			if (error) {
 				return;
 			}
