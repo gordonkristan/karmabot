@@ -47,7 +47,7 @@ module.exports = function(robot) {
 			}
 
 			var verb = (operation === '++' ? 'risen' : 'fallen');
-			var replySubject = (isUsername = '@' + subject : subject);
+			var replySubject = (isUsername = '@' ? subject : subject);
 			response.send(replySubject +'\'s karma has ' + verb + ' to ' + (newValue || 0));
 		});
 	});
