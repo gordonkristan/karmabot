@@ -61,11 +61,11 @@ module.exports = function(robot) {
 
 		var match;
 
-		if (match = message.match(/(:\S+?:)\x20*(\+\+|\-\-|—)/i)) { // Emoji
+		if (match = message.match(/^\s*(:\S+?:)\x20*(\+\+|\-\-|—)\s*$/i)) { // Emoji
 			handleKarmaRequest(match[1], match[2], response);
-		} else if (match = message.match(/(@\S+?):?\x20*(\+\+|\-\-|—)/i)) { // @Mentions
+		} else if (match = message.match(/^\s*(@\S+?):?\x20*(\+\+|\-\-|—)\s*$/i)) { // @Mentions
 			handleKarmaRequest(match[1], match[2], response);
-		} else if (match = message.match(/(\S+)\x20*(\+\+|\-\-|—)/i)) { // Everything else
+		} else if (match = message.match(/^\s*(\S+)\x20*(\+\+|\-\-|—)\s*$/i)) { // Everything else
 			handleKarmaRequest(match[1], match[2], response);
 		}
 	});
