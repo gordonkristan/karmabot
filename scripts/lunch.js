@@ -1,5 +1,5 @@
 var handleLunchOffer = function(response) {
-	response.send(' ooooooooo :fiestaparrot: :tayne: :parrotdad: :donkeysauce:')
+	response.send(' ooooooooo :fiestaparrot: :tayne: :parrotdad: :donkeysauce: :chompy:')
 };
 
 module.exports = function(robot) {
