@@ -14,7 +14,7 @@ var shouldRobotRespond = function(message) {
 			return false;
 		}
 		var random = Math.random();
-		return confidenceLevel <= random;
+		return confidenceLevel >= random;
 	}
 	return false;
 }
