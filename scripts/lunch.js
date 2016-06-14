@@ -6,12 +6,17 @@ var messageConfidenceHash = {
 }
 
 var shouldRobotRespond = function(message) {
-	var confidenceLevel = messageConfidenceHash[message.toLowerCase()];
-	if (!confidenceLevel) {
-		return false;
+	var text = message.message ? message.message.rawText : ' ';
+	if (text) {
+		text = text.toLowerCase();
+		var confidenceLevel = messageConfidenceHash[text];
+		if (!confidenceLevel) {
+			return false;
+		}
+		var random = Math.random();
+		return confidenceLevel <= random;
 	}
-	var random = Math.random();
-	return confidenceLevel <= random; 
+	return false;
 }
 
 var handleLunchOffer = function(response) {
